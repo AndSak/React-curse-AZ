@@ -1,22 +1,14 @@
 import React, { useState } from 'react';
+import Counter from './components/Counter';
+import ClassCounter from './components/ClassCounter'
 
 function App() {
-  const [count, setCount] = useState(40);
   const [value, setValue] = useState('word');
-
-  function increment() {
-    setCount(count + 1)
-  }
-
-  function decrement() {
-    setCount(count - 1)
-  }
 
   return (
     <div>
-      <h1>{count}</h1>
-      <button onClick={increment}>plus +1</button>
-      <button onClick={decrement}>minus -1</button>
+      <Counter/>
+      <ClassCounter/>
 
       <h2>{value}</h2>
       <input
