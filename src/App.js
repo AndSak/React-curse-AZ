@@ -1,13 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, {useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import Counter from './components/Counter';
 import ClassCounter from './components/ClassCounter'
-import PostItem from './components/PostItem'
 import MyButton from './components/UI/button/MyButton';
 import PostList from './components/PostList';
 import './styles/App.css';
 import MyInput from './components/UI/input/MyInput';
-
-
 
 function App() {
   const [value, setValue] = useState('word');
@@ -24,7 +22,7 @@ function App() {
   function addNewPost(e) {
     e.preventDefault();
     const newPost = {
-      id: Date.now(),
+      id: uuidv4(),
       title,
       body,
     }
@@ -58,7 +56,7 @@ function App() {
       <input
         type="input name"
         value={value}
-        onChange={(event) => setValue(event.target.value)}
+        onChange={event => setValue(event.target.value)}
       />
     </div>
   );

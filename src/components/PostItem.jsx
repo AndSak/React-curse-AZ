@@ -1,9 +1,6 @@
 import React, { } from "react";
 
-
 function PostItem(props) {
-  console.log(props);
-
   return (
     <div className="App">
       <div className="post">
