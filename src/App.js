@@ -1,14 +1,9 @@
-import React, {useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-import Counter from './components/Counter';
-import ClassCounter from './components/ClassCounter'
-import MyButton from './components/UI/button/MyButton';
+import React, { useState } from 'react';
 import PostList from './components/PostList';
 import './styles/App.css';
-import MyInput from './components/UI/input/MyInput';
+import PostForm from './components/PostForm';
 
 function App() {
-  const [value, setValue] = useState('word');
 
   const [posts, setPosts] = useState([
     { id: 1, title: 'JavaScript 1', body: 'Description' },
@@ -16,48 +11,18 @@ function App() {
     { id: 3, title: 'JavaScript 3', body: 'Description' },
   ]);
 
-  const [title, setTitle] = useState('');
-  const [body, setBody] = useState('');
+  function createPost(newPost) {
+    setPosts([...posts, newPost])
+  };
 
-  function addNewPost(e) {
-    e.preventDefault();
-    const newPost = {
-      id: uuidv4(),
-      title,
-      body,
-    }
-    setPosts([...posts, newPost]);
-    setBody('');
-    setTitle('');
+  function removePost(post) {
+    setPosts(posts.filter(p => p.id !== post.id))
   }
 
   return (
     <div className='App'>
-      <form>
-        {/* Управляемый компонент */}
-        <MyInput
-          value={title}
-          onChange={(ev) => setTitle(ev.target.value)}
-          type="text"
-          placeholder="name post" />
-        <MyInput
-          value={body}
-          onChange={(ev) => setBody(ev.target.value)}
-          type="text"
-          placeholder=" describe post" />
-        <MyButton onClick={addNewPost}>input post</MyButton>
-      </form>
-
-      <PostList posts={posts} title='Order list 1' />
-
-      < Counter />
-      < ClassCounter />
-      <h2> {value} </h2>
-      <input
-        type="input name"
-        value={value}
-        onChange={event => setValue(event.target.value)}
-      />
+      <PostForm create={createPost} />
+      <PostList remove={removePost} posts={posts} title='Order list 1' />
     </div>
   );
 }
