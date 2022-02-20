@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import PostList from './components/PostList';
 import './styles/App.css';
 import PostForm from './components/PostForm';
@@ -16,15 +16,20 @@ function App() {
   const [selectSort, setSelectSort] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
 
-  function getSortedPosts(){
-    console.log('Worked getSortPosts')
-    if(selectSort){
+
+  const sortedPosts = useMemo(() => {
+    console.log('Worked getSortPosts');
+    if (selectSort) {
       return [...posts].sort((a, b) => a[selectSort].localeCompare([selectSort]));
     }
     return posts;
-  }
-  
-  const sortedPosts = getSortedPosts();
+
+  }, [selectSort, posts]);
+
+  const sortedAndSearchedPosts = useMemo(() => {
+    return sortedPosts.filter(post => post.title.toLowerCase().includes(searchQuery))
+  }, [searchQuery, sortedPosts])
+
 
   function createPost(newPost) {
     setPosts([...posts, newPost])
@@ -58,11 +63,11 @@ function App() {
           ]}
         />
       </div>
-      {posts.length === 0
+      {sortedAndSearchedPosts.length === 0
         ?
         <p style={{ textAlign: 'center', fontSize: '2em' }}> All Posts are deleting</p>
         :
-        <PostList remove={removePost} posts={sortedPosts} title='Order list 1' />
+        <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Order list 1' />
       }
     </div>
   );
