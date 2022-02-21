@@ -21,7 +21,6 @@ const PostFilter = ({ filter, setFilter }) => {
                 ]}
             />
         </div>
-
     )
 }
 

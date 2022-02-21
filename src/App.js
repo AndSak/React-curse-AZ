@@ -3,6 +3,7 @@ import PostList from './components/PostList';
 import './styles/App.css';
 import PostForm from './components/PostForm';
 import PostFilter from './components/PostFilter';
+import MyModal from './components/UI/modal/MyModal';
 
 function App() {
 
@@ -12,7 +13,7 @@ function App() {
     { id: 3, title: 'C++ ', body: 'Base' },
   ]);
 
-  const [filter, setFilter] = useState({sort: '', query: ''});
+  const [filter, setFilter] = useState({ sort: '', query: '' });
 
   const sortedPosts = useMemo(() => {
     console.log('Worked getSortPosts');
@@ -38,19 +39,17 @@ function App() {
 
   return (
     <div className='App'>
-      <PostForm create={createPost} />
-      <hr style={{ margin: '20px 0px' }} />
+      <MyModal>
+        <PostForm create={createPost} />
+      </MyModal>
 
-      <PostFilter 
+      <hr style={{ margin: '20px 0px' }} />
+      <PostFilter
         filter={filter}
         setFilter={setFilter}
-        />
-      {sortedAndSearchedPosts.length === 0
-        ?
-        <p style={{ textAlign: 'center', fontSize: '2em' }}> All Posts are deleting</p>
-        :
-        <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Order list 1' />
-      }
+      />
+      <PostList remove={removePost} posts={sortedAndSearchedPosts} title='Order list 1' />
+
     </div>
   );
 }
